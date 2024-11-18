@@ -91,24 +91,56 @@ document.addEventListener('DOMContentLoaded', function() {
     // Функция для покупки звезд через Telegram
     async function buyStars() {
         try {
-            // Создаем ссылку для покупки с указанием количества
-            const amount = 100; // 100 Telegram Stars
+            // Показываем окно ввода количества звезд
+            const inputResult = await window.Telegram.WebApp.showPopup({
+                title: 'Покупка звезд мощности',
+                message: 'Введите количество Telegram Stars (от 1 до 10000):',
+                buttons: [
+                    {type: 'default', id: '10', text: '10 Stars'},
+                    {type: 'default', id: '100', text: '100 Stars'},
+                    {type: 'default', id: '1000', text: '1000 Stars'},
+                    {type: 'default', id: 'custom', text: 'Другое количество'},
+                ]
+            });
 
-            // Пытаемся открыть окно покупки
-            const result = await window.Telegram.WebApp.showPopup({
-                title: 'Покупка звезд',
-                message: `Вы хотите купить ${amount} Telegram Stars?`,
+            let amount = 0;
+
+            if (inputResult === 'custom') {
+                // Если выбрано "Другое количество", показываем текстовое поле для ввода
+                const customAmount = await window.Telegram.WebApp.showPopup({
+                    title: 'Введите количество',
+                    message: 'Укажите количество Telegram Stars (1-10000):',
+                    buttons: [
+                        {type: 'ok', text: 'Подтвердить'},
+                        {type: 'cancel', text: 'Отмена'}
+                    ]
+                });
+
+                if (customAmount && !isNaN(customAmount)) {
+                    amount = Math.min(Math.max(parseInt(customAmount), 1), 10000);
+                } else {
+                    return; // Отмена или неверный ввод
+                }
+            } else if (inputResult) {
+                amount = parseInt(inputResult);
+            } else {
+                return; // Отмена
+            }
+
+            // Подтверждение покупки
+            const confirmResult = await window.Telegram.WebApp.showPopup({
+                title: 'Подтверждение',
+                message: `Вы хотите купить ${amount} звезд мощности за ${amount} Telegram Stars?`,
                 buttons: [
                     {type: 'ok', text: 'Купить'},
                     {type: 'cancel', text: 'Отмена'}
                 ]
             });
 
-            if (result === 'ok') {
-                // Если пользователь подтвердил покупку
+            if (confirmResult === 'ok') {
                 try {
-                    // Пытаемся совершить покупку
-                    await window.Telegram.WebApp.openInvoice('telegram_stars_100');
+                    // Создаем инвойс с указанным количеством
+                    await window.Telegram.WebApp.openInvoice(`stars_${amount}`);
 
                     // Если покупка успешна, начисляем звезды мощности
                     updateStarsCount(starsCount + amount);
@@ -120,7 +152,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         buttons: [{type: 'ok', text: 'OK'}]
                     });
                 } catch (e) {
-                    // Если произошла ошибка при покупке
                     console.error('Ошибка при покупке:', e);
                     window.Telegram.WebApp.showPopup({
                         title: 'Ошибка',
