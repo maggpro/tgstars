@@ -14,35 +14,62 @@
 <body>
     <div class="app">
         <div class="content" id="mainContent">
-            <div class="mining-container">
-                <div class="balance-card">
-                    <div class="balance-title">Ваш баланс</div>
-                    <div class="balance-amount">0 STARS</div>
+            <div class="menu-card">
+                <div class="menu-header">Мой Профиль</div>
+                <div class="menu-row">
+                    <span class="menu-label">Баланс</span>
+                    <span class="menu-value">0.00 ⭐</span>
                 </div>
-
-                <button class="mining-button" id="miningButton">
-                    <img src="assets/images/pickaxe.svg" alt="Mine" class="mining-icon">
-                </button>
-
-                <div class="stats-container">
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Монет в клик</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Бонус скорости</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Всего добыто</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-value">0</div>
-                        <div class="stat-label">Уровень майнера</div>
-                    </div>
+                <div class="menu-row">
+                    <span class="menu-label">Энергия</span>
+                    <span class="menu-value">0/100</span>
+                </div>
+                <div class="energy-bar">
+                    <div class="energy-progress"></div>
                 </div>
             </div>
+
+            <div class="menu-card">
+                <div class="menu-header">Информация</div>
+                <div class="menu-row">
+                    <span class="menu-label">Блок</span>
+                    <span class="menu-value">#000000</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">Сложность</span>
+                    <span class="menu-value">0.0K</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">Награда</span>
+                    <span class="menu-value">0 ⭐</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">В сети</span>
+                    <span class="menu-value">0.0K</span>
+                </div>
+            </div>
+
+            <div class="menu-card">
+                <div class="menu-header">Майнинг</div>
+                <div class="menu-row">
+                    <span class="menu-label">Статус</span>
+                    <span class="status-badge">Ожидание</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">Shares</span>
+                    <span class="menu-value">0</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">Хэши</span>
+                    <span class="menu-value">0</span>
+                </div>
+                <div class="menu-row">
+                    <span class="menu-label">Доход</span>
+                    <span class="menu-value">0 ⭐</span>
+                </div>
+            </div>
+
+            <button class="mining-button">Начать майнинг</button>
         </div>
 
         <nav class="bottom-menu">
