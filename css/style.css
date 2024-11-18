@@ -552,38 +552,49 @@ html, body {
 }
 
 .menu-row.energy-section {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    width: 100%;
-    margin: 8px 0;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+    margin: 8px 0 !important;
 }
 
 .energy-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
-    margin-top: 4px;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
 }
 
 .energy-bar {
-    flex: 1;
-    background: #1a1a1a;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
+    flex: 1 !important;
+    background: #1a1a1a !important;
+    height: 8px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
 }
 
 .collect-button {
-    background: var(--gold-primary);
-    border: none;
-    border-radius: 4px;
-    padding: 4px 8px;
-    color: #000;
-    font-size: 12px;
-    cursor: pointer;
-    white-space: nowrap; /* Предотвращаем перенос текста */
-    min-width: 70px; /* Фиксированная минимальная ширина */
+    background: var(--gold-primary) !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    color: #000 !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    min-width: 70px !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+/* Добавляем сброс стилей Telegram для этих элементов */
+.menu-row.energy-section,
+.energy-controls,
+.energy-bar,
+.collect-button {
+    all: unset !important;
+    box-sizing: border-box !important;
 }
