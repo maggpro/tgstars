@@ -22,14 +22,16 @@ document.addEventListener('DOMContentLoaded', function() {
         energyProgress.style.width = '0%';
         collectButton.disabled = true;
 
-        setTimeout(() => {
+        void energyProgress.offsetWidth;
+
+        requestAnimationFrame(() => {
             energyProgress.classList.add('filling');
             energyProgress.style.width = '100%';
+        });
 
-            setTimeout(() => {
-                collectButton.disabled = false;
-            }, 5000);
-        }, 50);
+        setTimeout(() => {
+            collectButton.disabled = false;
+        }, 5000);
     }
 
     collectButton.addEventListener('click', function() {
