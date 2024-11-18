@@ -10,8 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function vibrate() {
-        if (navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate) {
-            navigator.vibrate(50);
+        // Используем Telegram Web App API для тактильной обратной связи
+        if (window.Telegram.WebApp.isVersionAtLeast('6.1')) {
+            window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
+        } else {
+            // Fallback для устройств без поддержки
+            if (navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate) {
+                navigator.vibrate(50);
+            }
         }
     }
 
