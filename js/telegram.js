@@ -46,28 +46,41 @@ document.addEventListener('DOMContentLoaded', function() {
     `;
     document.body.appendChild(forceBackground);
 
-    // Переопределяем стили Telegram для активных элементов
-    const style = document.createElement('style');
-    style.textContent = `
-        .menu-item.active {
-            color: #ffd700 !important;
-        }
+    // Принудительно устанавливаем стили
+    const styleOverride = document.createElement('style');
+    styleOverride.innerHTML = `
+        .menu-item.active,
         .menu-item.active * {
             color: #ffd700 !important;
-        }
-        button.menu-item.active {
-            color: #ffd700 !important;
             background: none !important;
+            border: none !important;
+        }
+
+        .menu-item:not(.active),
+        .menu-item:not(.active) * {
+            color: rgba(255, 255, 255, 0.7) !important;
+            background: none !important;
+            border: none !important;
+        }
+
+        /* Отключаем стандартные стили Telegram */
+        button.button-color {
+            background: none !important;
+            color: inherit !important;
         }
     `;
-    document.head.appendChild(style);
+    document.head.appendChild(styleOverride);
 
-    // Обработчик для переключения активного состояния
+    // Обновляем цвета при переключении
     const menuItems = document.querySelectorAll('.menu-item');
     menuItems.forEach(item => {
         item.addEventListener('click', function() {
-            menuItems.forEach(i => i.classList.remove('active'));
+            menuItems.forEach(i => {
+                i.classList.remove('active');
+                i.style.color = 'rgba(255, 255, 255, 0.7)';
+            });
             this.classList.add('active');
+            this.style.color = '#ffd700';
         });
     });
 });

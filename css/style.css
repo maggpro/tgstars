@@ -48,20 +48,43 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: none;
+    background: none !important;
     border: none;
     color: rgba(255, 255, 255, 0.7) !important;
     font-size: 13px;
     padding: 0;
     margin: 0;
-    transition: color 0.3s;
+    transition: none !important;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.menu-item.active {
-    color: var(--active-color) !important;
+.menu-item.active,
+.menu-item.active span,
+button.menu-item.active {
+    color: #ffd700 !important;
     background: none !important;
-    --tg-theme-button-color: var(--active-color) !important;
-    --tg-theme-text-color: var(--active-color) !important;
+    border: none !important;
+    --tg-theme-button-color: #ffd700 !important;
+    --tg-theme-text-color: #ffd700 !important;
+}
+
+.menu-item:not(.active),
+.menu-item:not(.active) span,
+button.menu-item:not(.active) {
+    color: rgba(255, 255, 255, 0.7) !important;
+    background: none !important;
+    border: none !important;
+}
+
+.menu-item,
+.menu-item:hover,
+.menu-item:focus,
+.menu-item:active {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    background: none !important;
+    border: none !important;
+    outline: none !important;
 }
 
 .mining-container {
