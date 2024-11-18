@@ -165,38 +165,33 @@ function initUserProfile() {
         userNameElement.textContent = displayName;
         userIdElement.textContent = `ID: ${user.id}`;
 
-        // Если есть фото профиля
-        if (user.photo_url) {
-            userAvatarElement.src = user.photo_url;
-        } else {
-            // Если фото нет, генерируем инициалы для аватара
-            const initials = displayName
-                .split(' ')
-                .map(n => n[0])
-                .join('')
-                .toUpperCase();
+        // Генерируем аватар с инициалами
+        const initials = displayName
+            .split(' ')
+            .map(n => n[0])
+            .join('')
+            .toUpperCase();
 
-            // Создаем canvas для отрисовки аватара с инициалами
-            const canvas = document.createElement('canvas');
-            canvas.width = 100;
-            canvas.height = 100;
-            const ctx = canvas.getContext('2d');
+        // Создаем canvas для отрисовки аватара с инициалами
+        const canvas = document.createElement('canvas');
+        canvas.width = 100;
+        canvas.height = 100;
+        const ctx = canvas.getContext('2d');
 
-            // Рисуем круглый фон
-            ctx.fillStyle = '#7B68EE';
-            ctx.beginPath();
-            ctx.arc(50, 50, 50, 0, Math.PI * 2);
-            ctx.fill();
+        // Рисуем круглый фон
+        ctx.fillStyle = '#7B68EE';
+        ctx.beginPath();
+        ctx.arc(50, 50, 50, 0, Math.PI * 2);
+        ctx.fill();
 
-            // Добавляем инициалы
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = '32px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(initials, 50, 50);
+        // Добавляем инициалы
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = '32px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(initials, 50, 50);
 
-            // Устанавливаем созданное изображение как аватар
-            userAvatarElement.src = canvas.toDataURL();
-        }
+        // Устанавливаем созданное изображение как аватар
+        userAvatarElement.src = canvas.toDataURL();
     }
 }
