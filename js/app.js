@@ -1,8 +1,39 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Инициализация элементов для энергии
     const energyControls = document.querySelector('.energy-controls');
     const collectButton = document.querySelector('.collect-button');
     const balanceElement = document.querySelector('.menu-value');
     let balance = 0;
+
+    // Инициализация профиля пользователя
+    function initUserProfile() {
+        const userNameElement = document.getElementById('userName');
+        const userIdElement = document.getElementById('userId');
+
+        // Получаем данные пользователя из Telegram WebApp
+        if (window.Telegram && window.Telegram.WebApp) {
+            const user = window.Telegram.WebApp.initDataUnsafe.user;
+            if (user) {
+                // Формируем имя пользователя
+                const displayName = user.username ||
+                                  (user.first_name && user.last_name ?
+                                   `${user.first_name} ${user.last_name}` :
+                                   user.first_name || `User ${user.id}`);
+
+                // Устанавливаем имя и ID
+                userNameElement.textContent = displayName;
+                userIdElement.textContent = `ID: ${user.id}`;
+            } else {
+                // Если данные пользователя недоступны
+                userNameElement.textContent = 'User';
+                userIdElement.textContent = 'ID: 0';
+            }
+        } else {
+            // Если Telegram WebApp недоступен
+            userNameElement.textContent = 'User';
+            userIdElement.textContent = 'ID: 0';
+        }
+    }
 
     function createNewProgressBar() {
         const oldBars = energyControls.querySelectorAll('.energy-bar');
@@ -70,8 +101,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Запускаем первое заполнение
-    startEnergyProgress();
+    // Инициализация
+    initUserProfile(); // Инициализируем профиль пользователя
+    startEnergyProgress(); // Запускаем первое заполнение
 });
 
 function updateEnergyBar(value, max) {
