@@ -8,18 +8,31 @@
     --active-color: #ffd700;
 }
 
+/* Основные стили для body и html */
+html, body {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: var(--tg-theme-bg-color, #0a0a0a) !important;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    background-color: var(--tg-theme-bg-color, #0a0a0a);
-    color: var(--tg-theme-text-color, #ffffff);
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-    min-height: 100vh;
-    position: relative;
-    touch-action: pan-x pan-y;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+    color: var(--tg-theme-text-color, #ffffff) !important;
+}
+
+/* Контейнер */
+.container {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-height: 100vh !important;
+    padding: 15px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    background-color: var(--tg-theme-bg-color, #0a0a0a) !important;
 }
 
 .app {

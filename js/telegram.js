@@ -1,15 +1,22 @@
 let tg = window.Telegram.WebApp;
 
-// Расширяем на весь экран
+// Принудительно расширяем на весь экран
 tg.expand();
 
+// Устанавливаем тему и цвета
+tg.setHeaderColor('#0a0a0a');
+tg.setBackgroundColor('#0a0a0a');
+
+// Устанавливаем основные параметры
+tg.MainButton.hide();
+tg.BackButton.hide();
+
 // Принудительно устанавливаем темную тему
-document.body.style.backgroundColor = '#0a0a0a';
 document.documentElement.style.setProperty('--tg-theme-bg-color', '#0a0a0a');
 document.documentElement.style.setProperty('--tg-theme-secondary-bg-color', '#2a2a2a');
 document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
 document.documentElement.style.setProperty('--tg-theme-button-color', '#ffd700');
-document.documentElement.style.setProperty('--tg-theme-button-text-color', '#ffffff');
+document.documentElement.style.setProperty('--tg-theme-button-text-color', '#000000');
 
 // Инициализация профиля
 document.addEventListener('DOMContentLoaded', function() {
