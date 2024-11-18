@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const energyProgress = document.querySelector('.energy-progress');
+    const energyBar = document.querySelector('.energy-bar');
     const collectButton = document.querySelector('.collect-button');
     const balanceElement = document.querySelector('.menu-value');
     let balance = 0;
@@ -18,15 +18,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startEnergyProgress() {
-        energyProgress.classList.remove('filling');
-        energyProgress.style.width = '0%';
+        energyBar.value = 0;
         collectButton.disabled = true;
 
-        void energyProgress.offsetWidth;
-
         requestAnimationFrame(() => {
-            energyProgress.classList.add('filling');
-            energyProgress.style.width = '100%';
+            energyBar.value = 100;
         });
 
         setTimeout(() => {

@@ -538,29 +538,35 @@ html, body {
 }
 
 .energy-controls {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
 }
 
 .energy-bar {
-    flex: 1;
-    background: #1a1a1a;
-    height: 8px;
-    border-radius: 4px;
-    overflow: hidden;
+    flex: 1 !important;
+    height: 8px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
 }
 
-.energy-progress {
-    width: 0%;
-    height: 100%;
-    background: var(--gold-primary);
-    transition: width 0s linear;
+.energy-bar::-webkit-progress-bar {
+    background-color: #1a1a1a !important;
+    border-radius: 4px !important;
 }
 
-.energy-progress.filling {
-    transition: width 5s linear;
+.energy-bar::-webkit-progress-value {
+    background-color: #ffd700 !important;
+    transition: width 5s linear !important;
+}
+
+.energy-bar::-moz-progress-bar {
+    background-color: #ffd700 !important;
+    transition: width 5s linear !important;
 }
 
 .menu-row.energy-section {
