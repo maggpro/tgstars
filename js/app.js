@@ -4,110 +4,76 @@ document.addEventListener('DOMContentLoaded', function() {
         window.Telegram.WebApp.expand();
     }
 
-    // Инициализация элементов для энергии
+    // Инициализация элементов
     const energyControls = document.querySelector('.energy-controls');
     const collectButton = document.querySelector('.collect-button');
     const balanceElement = document.querySelector('.menu-value');
+    const starsCountElement = document.querySelector('.stars-count');
+    const miningRateElement = document.querySelector('.mining-rate');
+    const buyStarsButton = document.querySelector('.buy-stars-button');
+
+    // Начальные значения
     let balance = 0;
+    let starsCount = 0; // количество звезд мощности
 
-    // Инициализация профиля пользователя
-    function initUserProfile() {
-        const userNameElement = document.getElementById('userName');
-        const userIdElement = document.getElementById('userId');
-        const userAvatarElement = document.getElementById('userAvatar');
+    function calculateReward() {
+        const baseReward = 0.0001; // базовая награда
+        const powerBonus = starsCount / 5; // бонус от звезд мощности
+        const totalReward = (baseReward + powerBonus) / 10000; // делим на 10000
+        return totalReward;
+    }
 
-        // Получаем данные пользователя из Telegram WebApp
-        const tg = window.Telegram.WebApp;
+    function formatBalance(value) {
+        // Всегда используем 8 знаков после запятой
+        return value.toFixed(8) + ' $STARS';
+    }
 
-        if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-            const user = tg.initDataUnsafe.user;
+    function updateBalance(amount) {
+        balance += amount;
+        balanceElement.textContent = formatBalance(balance);
+    }
 
-            // Формируем имя пользователя
-            const displayName = user.username ||
-                              (user.first_name && user.last_name ?
-                               `${user.first_name} ${user.last_name}` :
-                               user.first_name || `User ${user.id}`);
-
-            // Устанавливаем имя и ID
-            userNameElement.textContent = displayName;
-            userIdElement.textContent = `ID: ${user.id}`;
-
-            // Создаем аватар
-            const initials = displayName
-                .split(' ')
-                .map(n => n[0])
-                .join('')
-                .toUpperCase();
-
-            // Создаем canvas для аватара
-            const canvas = document.createElement('canvas');
-            canvas.width = 84;
-            canvas.height = 84;
-            const ctx = canvas.getContext('2d');
-
-            // Рисуем круглый фон
-            ctx.fillStyle = '#7B68EE';
-            ctx.beginPath();
-            ctx.arc(42, 42, 42, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Добавляем инициалы
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = '24px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText(initials, 42, 42);
-
-            // Устанавливаем аватар
-            userAvatarElement.src = canvas.toDataURL();
-
-        } else {
-            // Если данные пользователя недоступны
-            userNameElement.textContent = 'User';
-            userIdElement.textContent = 'ID: 0';
-
-            // Создаем дефолтный аватар
-            const canvas = document.createElement('canvas');
-            canvas.width = 84;
-            canvas.height = 84;
-            const ctx = canvas.getContext('2d');
-
-            ctx.fillStyle = '#7B68EE';
-            ctx.beginPath();
-            ctx.arc(42, 42, 42, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.fillStyle = '#FFFFFF';
-            ctx.font = '24px Arial';
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            ctx.fillText('U', 42, 42);
-
-            userAvatarElement.src = canvas.toDataURL();
-        }
+    function updateStarsCount(count) {
+        starsCount = count;
+        starsCountElement.textContent = `${count} ⭐`;
+        // Обновляем отображение скорости добычи
+        const miningRate = calculateReward();
+        miningRateElement.textContent = formatBalance(miningRate);
     }
 
     function createNewProgressBar() {
+        // Удаляем старый прогресс бар
         const oldBars = energyControls.querySelectorAll('.energy-bar');
         oldBars.forEach(bar => bar.remove());
 
+        // Создаем новый прогресс бар
         const newBar = document.createElement('progress');
         newBar.className = 'energy-bar';
         newBar.setAttribute('max', '100');
         newBar.setAttribute('value', '0');
 
-        if (energyControls.firstChild) {
-            energyControls.insertBefore(newBar, energyControls.firstChild);
-        } else {
-            energyControls.appendChild(newBar);
-        }
+        // Вставляем новый прогресс бар
+        energyControls.insertBefore(newBar, collectButton);
 
         return newBar;
     }
 
-    function updateBalance(amount) {
-        balance += amount;
-        balanceElement.textContent = balance.toFixed(2) + ' ⭐';
+    function startEnergyProgress() {
+        const energyBar = createNewProgressBar();
+        collectButton.disabled = true;
+
+        // Форсируем перерисовку
+        void energyBar.offsetWidth;
+
+        // Запускаем анимацию заполнения
+        requestAnimationFrame(() => {
+            energyBar.value = 100;
+        });
+
+        // Активируем кнопку через 5 секунд
+        setTimeout(() => {
+            collectButton.disabled = false;
+        }, 5000);
     }
 
     function vibrate() {
@@ -128,34 +94,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function startEnergyProgress() {
-        const energyBar = createNewProgressBar();
-        collectButton.disabled = true;
-
-        void energyBar.offsetWidth;
-
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                energyBar.value = 100;
-
-                setTimeout(() => {
-                    collectButton.disabled = false;
-                }, 5000);
-            }, 50);
-        });
-    }
-
+    // Обработчик кнопки Собрать
     collectButton.addEventListener('click', () => {
         if (!collectButton.disabled) {
             vibrate();
-            updateBalance(10);
+            const reward = calculateReward();
+            updateBalance(reward);
             startEnergyProgress();
         }
     });
 
-    // Инициализация
-    initUserProfile(); // Инициализируем профиль
-    startEnergyProgress(); // Запускаем энергию
+    // Обработчик кнопки покупки звезд (временно для теста)
+    buyStarsButton.addEventListener('click', () => {
+        vibrate();
+        updateStarsCount(starsCount + 1);
+    });
+
+    // Инициализация начальных значений
+    updateBalance(0);
+    updateStarsCount(0);
+
+    // Запускаем первое заполнение энергии
+    startEnergyProgress();
 });
 
 function updateEnergyBar(value, max) {
