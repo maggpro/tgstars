@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+    // Открываем Web App на весь экран
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.expand();
+    }
+
     // Инициализация элементов для энергии
     const energyControls = document.querySelector('.energy-controls');
     const collectButton = document.querySelector('.collect-button');
