@@ -9,29 +9,76 @@ document.addEventListener('DOMContentLoaded', function() {
     function initUserProfile() {
         const userNameElement = document.getElementById('userName');
         const userIdElement = document.getElementById('userId');
+        const userAvatarElement = document.getElementById('userAvatar');
 
         // Получаем данные пользователя из Telegram WebApp
-        if (window.Telegram && window.Telegram.WebApp) {
-            const user = window.Telegram.WebApp.initDataUnsafe.user;
-            if (user) {
-                // Формируем имя пользователя
-                const displayName = user.username ||
-                                  (user.first_name && user.last_name ?
-                                   `${user.first_name} ${user.last_name}` :
-                                   user.first_name || `User ${user.id}`);
+        const tg = window.Telegram.WebApp;
 
-                // Устанавливаем имя и ID
-                userNameElement.textContent = displayName;
-                userIdElement.textContent = `ID: ${user.id}`;
-            } else {
-                // Если данные пользователя недоступны
-                userNameElement.textContent = 'User';
-                userIdElement.textContent = 'ID: 0';
-            }
+        if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+            const user = tg.initDataUnsafe.user;
+
+            // Формируем имя пользователя
+            const displayName = user.username ||
+                              (user.first_name && user.last_name ?
+                               `${user.first_name} ${user.last_name}` :
+                               user.first_name || `User ${user.id}`);
+
+            // Устанавливаем имя и ID
+            userNameElement.textContent = displayName;
+            userIdElement.textContent = `ID: ${user.id}`;
+
+            // Создаем аватар
+            const initials = displayName
+                .split(' ')
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
+
+            // Создаем canvas для аватара
+            const canvas = document.createElement('canvas');
+            canvas.width = 84;
+            canvas.height = 84;
+            const ctx = canvas.getContext('2d');
+
+            // Рисуем круглый фон
+            ctx.fillStyle = '#7B68EE';
+            ctx.beginPath();
+            ctx.arc(42, 42, 42, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Добавляем инициалы
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(initials, 42, 42);
+
+            // Устанавливаем аватар
+            userAvatarElement.src = canvas.toDataURL();
+
         } else {
-            // Если Telegram WebApp недоступен
+            // Если данные пользователя недоступны
             userNameElement.textContent = 'User';
             userIdElement.textContent = 'ID: 0';
+
+            // Создаем дефолтный аватар
+            const canvas = document.createElement('canvas');
+            canvas.width = 84;
+            canvas.height = 84;
+            const ctx = canvas.getContext('2d');
+
+            ctx.fillStyle = '#7B68EE';
+            ctx.beginPath();
+            ctx.arc(42, 42, 42, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '24px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('U', 42, 42);
+
+            userAvatarElement.src = canvas.toDataURL();
         }
     }
 
@@ -102,8 +149,8 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Инициализация
-    initUserProfile(); // Инициализируем профиль пользователя
-    startEnergyProgress(); // Запускаем первое заполнение
+    initUserProfile(); // Инициализируем профиль
+    startEnergyProgress(); // Запускаем энергию
 });
 
 function updateEnergyBar(value, max) {
