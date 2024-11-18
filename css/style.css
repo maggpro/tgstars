@@ -453,7 +453,7 @@ html, body {
 .profile-name {
     font-size: 18px;
     font-weight: 500;
-    color: var(--tg-theme-text-color, #ffffff);
+    color: #ffffff !important;
     margin-bottom: 4px;
 }
 
