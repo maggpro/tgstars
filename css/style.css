@@ -433,8 +433,8 @@ html, body {
 }
 
 .profile-avatar {
-    width: 60px;
-    height: 60px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     overflow: hidden;
     border: 2px solid var(--gold-primary);
@@ -453,11 +453,11 @@ html, body {
 .profile-name {
     font-size: 18px;
     font-weight: 500;
-    color: var(--tg-theme-text-color);
+    color: var(--tg-theme-text-color, #ffffff);
     margin-bottom: 4px;
 }
 
 .profile-id {
     font-size: 14px;
-    color: #666;
+    color: rgba(255, 255, 255, 0.5);
 }

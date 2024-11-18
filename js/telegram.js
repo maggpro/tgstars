@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     initUserProfile();
 });
 
-// Функция переключения страниц (добавьте свою логику)
+// Функ��ия переключения страниц (добавьте свою логику)
 function switchPage(page) {
     console.log('Переключение на страницу:', page);
     // Добавьте здесь логику переключения контента
@@ -166,32 +166,32 @@ function initUserProfile() {
         userIdElement.textContent = `ID: ${user.id}`;
 
         // Генерируем аватар с инициалами
-        const initials = displayName
-            .split(' ')
-            .map(n => n[0])
-            .join('')
-            .toUpperCase();
-
-        // Создаем canvas для отрисовки аватара с инициалами
-        const canvas = document.createElement('canvas');
-        canvas.width = 100;
-        canvas.height = 100;
-        const ctx = canvas.getContext('2d');
-
-        // Рисуем круглый фон
-        ctx.fillStyle = '#7B68EE';
-        ctx.beginPath();
-        ctx.arc(50, 50, 50, 0, Math.PI * 2);
-        ctx.fill();
-
-        // Добавляем инициалы
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = '32px Arial';
-        ctx.textAlign = 'center';
-        ctx.textBaseline = 'middle';
-        ctx.fillText(initials, 50, 50);
-
-        // Устанавливаем созданное изображение как аватар
-        userAvatarElement.src = canvas.toDataURL();
+        generateInitialsAvatar(displayName, userAvatarElement);
     }
+}
+
+function generateInitialsAvatar(displayName, avatarElement) {
+    const initials = displayName
+        .split(' ')
+        .map(n => n[0])
+        .join('')
+        .toUpperCase();
+
+    const canvas = document.createElement('canvas');
+    canvas.width = 84;
+    canvas.height = 84;
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#7B68EE';
+    ctx.beginPath();
+    ctx.arc(42, 42, 42, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.font = '24px Arial';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(initials, 42, 42);
+
+    avatarElement.src = canvas.toDataURL();
 }
