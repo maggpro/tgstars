@@ -28,4 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
     if (tg.initDataUnsafe.query_id) {
         console.log('Telegram Web App успешно инициализирован');
     }
+
+    // Принудительно устанавливаем темный фон для меню
+    const bottomMenu = document.querySelector('.bottom-menu');
+    bottomMenu.style.backgroundColor = '#1c1c1c';
+
+    // Если меню все еще светлое, добавляем дополнительный слой
+    const forceBackground = document.createElement('div');
+    forceBackground.style.cssText = `
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 45px;
+        background-color: #1c1c1c !important;
+        z-index: 999;
+    `;
+    document.body.appendChild(forceBackground);
 });
