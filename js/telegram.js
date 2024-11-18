@@ -45,4 +45,29 @@ document.addEventListener('DOMContentLoaded', function() {
         z-index: 999;
     `;
     document.body.appendChild(forceBackground);
+
+    // Переопределяем стили Telegram для активных элементов
+    const style = document.createElement('style');
+    style.textContent = `
+        .menu-item.active {
+            color: #ffd700 !important;
+        }
+        .menu-item.active * {
+            color: #ffd700 !important;
+        }
+        button.menu-item.active {
+            color: #ffd700 !important;
+            background: none !important;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Обработчик для переключения активного состояния
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+        item.addEventListener('click', function() {
+            menuItems.forEach(i => i.classList.remove('active'));
+            this.classList.add('active');
+        });
+    });
 });
