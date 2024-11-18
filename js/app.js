@@ -20,3 +20,22 @@ document.addEventListener('DOMContentLoaded', function() {
         miningButton.insertAdjacentHTML('beforeend', ' ⭐');
     });
 });
+
+function updateEnergyBar(value, max) {
+    const energyProgress = document.querySelector('.energy-progress');
+    const percentage = (value / max) * 100;
+
+    energyProgress.style.width = `${percentage}%`;
+
+    // Добавляем цветовую индикацию
+    if (percentage < 20) {
+        energyProgress.style.backgroundColor = '#FF6B6B';
+    } else if (percentage < 50) {
+        energyProgress.style.backgroundColor = '#FFD93D';
+    } else {
+        energyProgress.style.backgroundColor = '#98FB98';
+    }
+}
+
+// Пример использования:
+updateEnergyBar(30, 100);

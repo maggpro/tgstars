@@ -91,6 +91,8 @@ document.addEventListener('DOMContentLoaded', function() {
             }, { passive: false });
         });
     });
+
+    initUserProfile();
 });
 
 // Функция переключения страниц (добавьте свою логику)
@@ -145,3 +147,56 @@ styleOverride.innerHTML = `
     }
 `;
 document.head.appendChild(styleOverride);
+
+// Добавьте эту функцию после инициализации tg
+function initUserProfile() {
+    const user = window.Telegram.WebApp.initDataUnsafe.user;
+    const userNameElement = document.getElementById('userName');
+    const userIdElement = document.getElementById('userId');
+    const userAvatarElement = document.getElementById('userAvatar');
+
+    if (user) {
+        // Устанавливаем имя пользователя
+        const displayName = user.username ||
+                          (user.first_name && user.last_name ?
+                           `${user.first_name} ${user.last_name}` :
+                           (user.first_name || `User ${user.id}`));
+
+        userNameElement.textContent = displayName;
+        userIdElement.textContent = `ID: ${user.id}`;
+
+        // Если есть фото профиля
+        if (user.photo_url) {
+            userAvatarElement.src = user.photo_url;
+        } else {
+            // Если фото нет, генерируем инициалы для аватара
+            const initials = displayName
+                .split(' ')
+                .map(n => n[0])
+                .join('')
+                .toUpperCase();
+
+            // Создаем canvas для отрисовки аватара с инициалами
+            const canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+
+            // Рисуем круглый фон
+            ctx.fillStyle = '#7B68EE';
+            ctx.beginPath();
+            ctx.arc(50, 50, 50, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Добавляем инициалы
+            ctx.fillStyle = '#FFFFFF';
+            ctx.font = '32px Arial';
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(initials, 50, 50);
+
+            // Устанавливаем созданное изображение как аватар
+            userAvatarElement.src = canvas.toDataURL();
+        }
+    }
+}
