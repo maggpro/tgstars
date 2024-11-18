@@ -88,6 +88,52 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Функция для покупки звезд через Telegram
+    async function buyStars() {
+        try {
+            // Создаем ссылку для покупки с указанием количества
+            const amount = 100; // 100 Telegram Stars
+
+            // Пытаемся открыть окно покупки
+            const result = await window.Telegram.WebApp.showPopup({
+                title: 'Покупка звезд',
+                message: `Вы хотите купить ${amount} Telegram Stars?`,
+                buttons: [
+                    {type: 'ok', text: 'Купить'},
+                    {type: 'cancel', text: 'Отмена'}
+                ]
+            });
+
+            if (result === 'ok') {
+                // Если пользователь подтвердил покупку
+                try {
+                    // Пытаемся совершить покупку
+                    await window.Telegram.WebApp.openInvoice('telegram_stars_100');
+
+                    // Если покупка успешна, начисляем звезды мощности
+                    updateStarsCount(starsCount + amount);
+
+                    // Показываем сообщение об успехе
+                    window.Telegram.WebApp.showPopup({
+                        title: 'Успешно!',
+                        message: `Добавлено ${amount} звезд мощности!`,
+                        buttons: [{type: 'ok', text: 'OK'}]
+                    });
+                } catch (e) {
+                    // Если произошла ошибка при покупке
+                    console.error('Ошибка при покупке:', e);
+                    window.Telegram.WebApp.showPopup({
+                        title: 'Ошибка',
+                        message: 'Не удалось совершить покупку. Попробуйте позже.',
+                        buttons: [{type: 'ok', text: 'OK'}]
+                    });
+                }
+            }
+        } catch (e) {
+            console.error('Ошибка:', e);
+        }
+    }
+
     // Обработчики кнопок
     collectButton.addEventListener('click', function() {
         if (!collectButton.disabled) {
@@ -98,9 +144,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    buyStarsButton.addEventListener('click', function() {
+    buyStarsButton.addEventListener('click', async () => {
         vibrate();
-        updateStarsCount(starsCount + 1);
+        await buyStars();
     });
 
     // Инициализация
