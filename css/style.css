@@ -19,7 +19,7 @@ body {
 
 .app {
     min-height: 100vh;
-    padding-bottom: 65px; /* Высота меню + отступ */
+    padding-bottom: calc(50px + env(safe-area-inset-bottom));
     box-sizing: border-box;
 }
 
@@ -35,16 +35,16 @@ body {
     left: 0;
     right: 0;
     display: flex;
-    justify-content: space-around;
-    align-items: center;
-    padding: 8px 12px;
+    justify-content: space-between;
     background-color: #1c1c1c !important;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 1000;
-    height: 60px;
+    padding: 8px 15px;
+    height: 50px;
 }
 
 .menu-item {
+    flex: 1;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -54,10 +54,10 @@ body {
     color: var(--tg-theme-text-color, #ffffff);
     opacity: 0.7;
     transition: opacity 0.3s;
-    padding: 4px 8px;
-    font-size: 12px;
-    width: 25%;
-    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-size: 10px;
+    min-width: 0;
 }
 
 .menu-item.active {
@@ -66,17 +66,20 @@ body {
 }
 
 .icon {
-    width: 24px;
-    height: 24px;
-    margin-bottom: 4px;
+    width: 20px;
+    height: 20px;
+    margin-bottom: 2px;
     flex-shrink: 0;
 }
 
 .menu-item span {
     white-space: nowrap;
-    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
     text-align: center;
-    line-height: 1.2;
+    line-height: 1;
+    margin-top: 2px;
 }
 
 .mining-container {
@@ -166,4 +169,19 @@ body {
         transform: translateY(-50px) scale(1.2);
         opacity: 0;
     }
+}
+
+@media screen and (max-width: 320px) {
+    .menu-item {
+        font-size: 9px;
+    }
+
+    .menu-item .icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+.bottom-menu {
+    padding-bottom: calc(8px + env(safe-area-inset-bottom));
 }
