@@ -583,6 +583,7 @@ html, body {
     height: 100% !important;
     background: #ffd700 !important;
     transition: width 0s linear !important;
+    display: block !important;
 }
 
 .energy-progress.filling {
@@ -605,55 +606,4 @@ html, body {
     background: #666 !important;
     cursor: not-allowed !important;
     opacity: 0.5 !important;
-}
-
-/* Добавляем сброс стилей Telegram для этих элементов */
-.menu-row.energy-section,
-.energy-controls,
-.energy-bar,
-.collect-button {
-    all: unset !important;
-    box-sizing: border-box !important;
-}
-
-/* Добавляем отладочные стили */
-.energy-section {
-    border: 1px solid red !important;
-    padding: 10px !important;
-}
-
-.energy-controls {
-    display: flex !important;
-    align-items: center !important;
-    gap: 10px !important;
-    width: 100% !important;
-    border: 1px solid blue !important;
-    padding: 5px !important;
-}
-
-.energy-bar {
-    flex: 1 !important;
-    background: #1a1a1a !important;
-    height: 8px !important;
-    border-radius: 4px !important;
-    overflow: hidden !important;
-    border: 1px solid green !important;
-}
-
-.energy-progress {
-    width: 0% !important;
-    height: 100% !important;
-    background: #ffd700 !important;
-    transition: width 0s linear !important;
-    display: block !important;
-}
-
-/* Убедимся, что элементы не скрыты */
-.menu-row.energy-section,
-.energy-controls,
-.energy-bar,
-.energy-progress {
-    display: block !important;
-    visibility: visible !important;
-    opacity: 1 !important;
 }
