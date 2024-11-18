@@ -30,7 +30,8 @@ document.addEventListener('DOMContentLoaded', function() {
     collectButton.addEventListener('click', function() {
         if (energyProgress.style.width === '100%') {
             updateBalance(10);
-            startEnergyProgress(); // Перезапускаем прогресс
+            // Перезапускаем прогресс сразу после нажатия
+            startEnergyProgress();
         }
     });
 
