@@ -484,6 +484,10 @@ html, body {
     transition: width 0s linear;
 }
 
+.energy-progress.filling {
+    transition: width 5s linear;
+}
+
 .energy-progress.filled {
     animation: pulse 1s infinite;
 }

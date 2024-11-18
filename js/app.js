@@ -11,13 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function vibrate() {
         try {
-            // Пробуем разные типы вибрации
             window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
-            // Если первый метод не сработает, раскомментируйте один из следующих:
-            // window.Telegram.WebApp.HapticFeedback.impactOccurred('medium');
-            // window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
-            // window.Telegram.WebApp.HapticFeedback.notificationOccurred('warning');
-            // window.Telegram.WebApp.HapticFeedback.selectionChanged();
         } catch (error) {
             console.log('Haptic feedback error:', error);
         }
@@ -42,7 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     collectButton.addEventListener('click', function() {
         if (energyProgress.style.width === '100%') {
-            vibrate(); // Вызываем вибрацию
+            vibrate();
             updateBalance(10);
             startEnergyProgress();
         }
