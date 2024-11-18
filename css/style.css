@@ -371,7 +371,7 @@ html, body {
     width: 0% !important;
     height: 100% !important;
     background: #ffd700 !important;
-    transition: width 0s linear !important;
+    transition: width 5s linear !important;
     display: block !important;
 }
 
@@ -596,7 +596,7 @@ html, body {
     width: 0% !important;
     height: 100% !important;
     background: #ffd700 !important;
-    transition: width 0s linear !important;
+    transition: width 5s linear !important;
     display: block !important;
 }
 

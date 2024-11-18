@@ -21,9 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
         energyBar.value = 0;
         collectButton.disabled = true;
 
-        requestAnimationFrame(() => {
+        void energyBar.offsetWidth;
+
+        setTimeout(() => {
             energyBar.value = 100;
-        });
+        }, 50);
 
         setTimeout(() => {
             collectButton.disabled = false;
@@ -34,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (!collectButton.disabled) {
             vibrate();
             updateBalance(10);
+            energyBar.value = 0;
             startEnergyProgress();
         }
     });
