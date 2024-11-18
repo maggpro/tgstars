@@ -1,22 +1,40 @@
 let tg = window.Telegram.WebApp;
 
-// Принудительно расширяем на весь экран
+// Принудительно устанавливаем темную тему
+tg.setThemeParams({
+    bg_color: '#0a0a0a',
+    secondary_bg_color: '#2a2a2a',
+    text_color: '#ffffff',
+    hint_color: '#999999',
+    link_color: '#ffd700',
+    button_color: '#ffd700',
+    button_text_color: '#000000'
+});
+
+// Расширяем на весь экран
 tg.expand();
 
-// Устанавливаем тему и цвета
+// Устанавливаем цвет хедера и фона
 tg.setHeaderColor('#0a0a0a');
 tg.setBackgroundColor('#0a0a0a');
 
-// Устанавливаем основные параметры
+// Скрываем стандартные кнопки
 tg.MainButton.hide();
 tg.BackButton.hide();
 
-// Принудительно устанавливаем темную тему
-document.documentElement.style.setProperty('--tg-theme-bg-color', '#0a0a0a');
-document.documentElement.style.setProperty('--tg-theme-secondary-bg-color', '#2a2a2a');
-document.documentElement.style.setProperty('--tg-theme-text-color', '#ffffff');
-document.documentElement.style.setProperty('--tg-theme-button-color', '#ffd700');
-document.documentElement.style.setProperty('--tg-theme-button-text-color', '#000000');
+// Принудительно устанавливаем CSS переменные
+document.documentElement.style.cssText = `
+    --tg-theme-bg-color: #0a0a0a !important;
+    --tg-theme-secondary-bg-color: #2a2a2a !important;
+    --tg-theme-text-color: #ffffff !important;
+    --tg-theme-hint-color: #999999 !important;
+    --tg-theme-link-color: #ffd700 !important;
+    --tg-theme-button-color: #ffd700 !important;
+    --tg-theme-button-text-color: #000000 !important;
+`;
+
+// Устанавливаем цвет фона для body
+document.body.style.backgroundColor = '#0a0a0a';
 
 // Инициализация профиля
 document.addEventListener('DOMContentLoaded', function() {
