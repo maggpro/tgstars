@@ -24,12 +24,48 @@ document.body.classList.add('dark-theme');
 
 // Инициализация при загрузке
 document.addEventListener('DOMContentLoaded', function() {
-    // Предотвращаем масштабирование
-    document.addEventListener('touchstart', function(event) {
-        if (event.touches.length > 1) {
-            event.preventDefault();
+    // Блокируем все жесты масштабирования
+    document.addEventListener('touchstart', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
         }
     }, { passive: false });
+
+    document.addEventListener('touchmove', function(e) {
+        if (e.touches.length > 1) {
+            e.preventDefault();
+        }
+    }, { passive: false });
+
+    // Блокируем двойное нажатие
+    document.addEventListener('dblclick', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Блокируем жест щипка
+    document.addEventListener('gesturestart', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gesturechange', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    document.addEventListener('gestureend', function(e) {
+        e.preventDefault();
+    }, { passive: false });
+
+    // Предотвращаем любые действия масштабирования
+    window.addEventListener('resize', function(e) {
+        if (document.visualViewport.scale !== 1) {
+            document.visualViewport.scale = 1;
+        }
+    });
+
+    // Сброс масштаба при загрузке
+    if (typeof window.visualViewport !== 'undefined') {
+        window.visualViewport.scale = 1;
+    }
 
     // Улучшенная обработка кликов для меню
     const menuItems = document.querySelectorAll('.menu-item');
@@ -62,23 +98,6 @@ function switchPage(page) {
     console.log('Переключение на страницу:', page);
     // Добавьте здесь логику переключения контента
 }
-
-// Дополнительные обработчики для предотвращения масштабирования
-document.addEventListener('touchmove', function(event) {
-    if (event.touches.length > 1) {
-        event.preventDefault();
-    }
-}, { passive: false });
-
-// Предотвращаем двойной тап
-let lastTouchEnd = 0;
-document.addEventListener('touchend', function(event) {
-    const now = (new Date()).getTime();
-    if (now - lastTouchEnd <= 300) {
-        event.preventDefault();
-    }
-    lastTouchEnd = now;
-}, false);
 
 // Проверяем, что приложение запущено в Telegram
 if (tg.initDataUnsafe.query_id) {
