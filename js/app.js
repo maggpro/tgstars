@@ -5,20 +5,19 @@ document.addEventListener('DOMContentLoaded', function() {
     let balance = 0;
 
     function createNewProgressBar() {
-        // Удаляем старый progress bar если он есть
-        const oldBar = document.querySelector('.energy-bar');
-        if (oldBar) {
-            oldBar.remove();
-        }
+        const oldBars = energyControls.querySelectorAll('.energy-bar');
+        oldBars.forEach(bar => bar.remove());
 
-        // Создаем новый progress bar
         const newBar = document.createElement('progress');
         newBar.className = 'energy-bar';
-        newBar.max = 100;
-        newBar.value = 0;
+        newBar.setAttribute('max', '100');
+        newBar.setAttribute('value', '0');
 
-        // Вставляем новый progress bar перед кнопкой
-        energyControls.insertBefore(newBar, collectButton);
+        if (energyControls.firstChild) {
+            energyControls.insertBefore(newBar, energyControls.firstChild);
+        } else {
+            energyControls.appendChild(newBar);
+        }
 
         return newBar;
     }
@@ -29,10 +28,20 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function vibrate() {
-        try {
-            window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
-        } catch (error) {
-            console.log('Haptic feedback error:', error);
+        if (window.Telegram && window.Telegram.WebApp) {
+            try {
+                window.Telegram.WebApp.HapticFeedback.impactOccurred('heavy');
+            } catch (e1) {
+                try {
+                    window.Telegram.WebApp.HapticFeedback.notificationOccurred('success');
+                } catch (e2) {
+                    try {
+                        window.Telegram.WebApp.HapticFeedback.selectionChanged();
+                    } catch (e3) {
+                        console.log('Haptic feedback not available');
+                    }
+                }
+            }
         }
     }
 
@@ -40,18 +49,19 @@ document.addEventListener('DOMContentLoaded', function() {
         const energyBar = createNewProgressBar();
         collectButton.disabled = true;
 
-        // Начинаем заполнение
-        setTimeout(() => {
-            energyBar.value = 100;
+        void energyBar.offsetWidth;
 
-            // Активируем кнопку через 5 секунд
+        requestAnimationFrame(() => {
             setTimeout(() => {
-                collectButton.disabled = false;
-            }, 5000);
-        }, 50);
+                energyBar.value = 100;
+
+                setTimeout(() => {
+                    collectButton.disabled = false;
+                }, 5000);
+            }, 50);
+        });
     }
 
-    // Обработчик кнопки Собрать
     collectButton.addEventListener('click', () => {
         if (!collectButton.disabled) {
             vibrate();
