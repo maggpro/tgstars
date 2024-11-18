@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Открываем Web App на весь экран
     if (window.Telegram && window.Telegram.WebApp) {
         window.Telegram.WebApp.expand();
+        window.Telegram.WebApp.setHeaderColor('#0a0a0a');
+        window.Telegram.WebApp.setBackgroundColor('#0a0a0a');
     }
 
     // Инициализация элементов
@@ -12,19 +14,47 @@ document.addEventListener('DOMContentLoaded', function() {
     const miningRateElement = document.querySelector('.mining-rate');
     const buyStarsButton = document.querySelector('.buy-stars-button');
 
-    // Начальные значения
     let balance = 0;
-    let starsCount = 0; // количество звезд мощности
+    let starsCount = 0;
+
+    function createNewProgressBar() {
+        const oldBars = energyControls.querySelectorAll('.energy-bar');
+        oldBars.forEach(bar => bar.remove());
+
+        const newBar = document.createElement('progress');
+        newBar.className = 'energy-bar';
+        newBar.max = 100;
+        newBar.value = 0;
+
+        energyControls.insertBefore(newBar, collectButton);
+        return newBar;
+    }
+
+    function startEnergyProgress() {
+        const energyBar = createNewProgressBar();
+        collectButton.disabled = true;
+
+        // Принудительная перерисовка
+        void energyBar.offsetWidth;
+
+        // Запускаем заполнение
+        setTimeout(() => {
+            energyBar.value = 100;
+        }, 50);
+
+        // Активируем кнопку через 5 секунд
+        setTimeout(() => {
+            collectButton.disabled = false;
+        }, 5000);
+    }
 
     function calculateReward() {
-        const baseReward = 0.0001; // базовая награда
-        const powerBonus = starsCount / 5; // бонус от звезд мощности
-        const totalReward = (baseReward + powerBonus) / 10000; // делим на 10000
-        return totalReward;
+        const baseReward = 0.0001;
+        const powerBonus = starsCount / 5;
+        return (baseReward + powerBonus) / 10000;
     }
 
     function formatBalance(value) {
-        // Всегда используем 8 знаков после запятой
         return value.toFixed(8) + ' $STARS';
     }
 
@@ -36,44 +66,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateStarsCount(count) {
         starsCount = count;
         starsCountElement.textContent = `${count} ⭐`;
-        // Обновляем отображение скорости добычи
         const miningRate = calculateReward();
         miningRateElement.textContent = formatBalance(miningRate);
-    }
-
-    function createNewProgressBar() {
-        // Удаляем старый прогресс бар
-        const oldBars = energyControls.querySelectorAll('.energy-bar');
-        oldBars.forEach(bar => bar.remove());
-
-        // Создаем новый прогресс бар
-        const newBar = document.createElement('progress');
-        newBar.className = 'energy-bar';
-        newBar.setAttribute('max', '100');
-        newBar.setAttribute('value', '0');
-
-        // Вставляем новый прогресс бар
-        energyControls.insertBefore(newBar, collectButton);
-
-        return newBar;
-    }
-
-    function startEnergyProgress() {
-        const energyBar = createNewProgressBar();
-        collectButton.disabled = true;
-
-        // Форсируем перерисовку
-        void energyBar.offsetWidth;
-
-        // Запускаем анимацию заполнения
-        requestAnimationFrame(() => {
-            energyBar.value = 100;
-        });
-
-        // Активируем кнопку через 5 секунд
-        setTimeout(() => {
-            collectButton.disabled = false;
-        }, 5000);
     }
 
     function vibrate() {
@@ -94,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Обработчик кнопки Собрать
-    collectButton.addEventListener('click', () => {
+    // Обработчики кнопок
+    collectButton.addEventListener('click', function() {
         if (!collectButton.disabled) {
             vibrate();
             const reward = calculateReward();
@@ -104,17 +98,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Обработчик кнопки покупки звезд (временно для теста)
-    buyStarsButton.addEventListener('click', () => {
+    buyStarsButton.addEventListener('click', function() {
         vibrate();
         updateStarsCount(starsCount + 1);
     });
 
-    // Инициализация начальных значений
+    // Инициализация
     updateBalance(0);
     updateStarsCount(0);
-
-    // Запускаем первое заполнение энергии
     startEnergyProgress();
 });
 
