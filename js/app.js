@@ -1,24 +1,41 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const miningButton = document.querySelector('.mining-button');
-    const statusBadge = document.querySelector('.status-badge');
-    let isMining = false;
+    const energyProgress = document.querySelector('.energy-progress');
+    const collectButton = document.querySelector('.collect-button');
+    const balanceElement = document.querySelector('.menu-value'); // элемент с балансом
+    let balance = 0;
 
-    miningButton.addEventListener('click', function() {
-        isMining = !isMining;
-        if (isMining) {
-            miningButton.textContent = 'Остановить майнинг';
-            statusBadge.textContent = 'Активен';
-            statusBadge.style.background = '#98FB98';
-        } else {
-            miningButton.textContent = 'Начать майнинг';
-            statusBadge.textContent = 'Ожидание';
-            statusBadge.style.background = '#FFE4B5';
+    function updateBalance(amount) {
+        balance += amount;
+        balanceElement.textContent = balance.toFixed(2) + ' ⭐';
+    }
+
+    function startEnergyProgress() {
+        // Сбрасываем прогресс
+        energyProgress.style.width = '0%';
+        energyProgress.classList.remove('filled');
+        collectButton.disabled = true;
+
+        // Запускаем анимацию заполнения
+        setTimeout(() => {
+            energyProgress.style.width = '100%';
+
+            // Когда энергия заполнена
+            setTimeout(() => {
+                energyProgress.classList.add('filled');
+                collectButton.disabled = false;
+            }, 5000); // 5 секунд на заполнение
+        }, 50);
+    }
+
+    collectButton.addEventListener('click', function() {
+        if (energyProgress.style.width === '100%') {
+            updateBalance(10);
+            startEnergyProgress(); // Перезапускаем прогресс
         }
-
-        // Добавляем звезды обратно после изменения текста
-        miningButton.insertAdjacentHTML('afterbegin', '⭐ ');
-        miningButton.insertAdjacentHTML('beforeend', ' ⭐');
     });
+
+    // Запускаем первоначальное заполнение
+    startEnergyProgress();
 });
 
 function updateEnergyBar(value, max) {
