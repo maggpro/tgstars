@@ -10,14 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function vibrate() {
-        // Используем Telegram Web App API для тактильной обратной связи
-        if (window.Telegram.WebApp.isVersionAtLeast('6.1')) {
+        try {
+            // Используем только Telegram API для вибрации
             window.Telegram.WebApp.HapticFeedback.impactOccurred('light');
-        } else {
-            // Fallback для устройств без поддержки
-            if (navigator.vibrate || navigator.webkitVibrate || navigator.mozVibrate || navigator.msVibrate) {
-                navigator.vibrate(50);
-            }
+        } catch (error) {
+            console.log('Haptic feedback not supported');
         }
     }
 
@@ -40,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     collectButton.addEventListener('click', function() {
         if (energyProgress.style.width === '100%') {
-            vibrate();
+            vibrate(); // Вызываем вибрацию
             updateBalance(10);
             startEnergyProgress();
         }
