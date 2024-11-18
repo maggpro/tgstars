@@ -1,8 +1,27 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const energyBar = document.querySelector('.energy-bar');
+    const energyControls = document.querySelector('.energy-controls');
     const collectButton = document.querySelector('.collect-button');
     const balanceElement = document.querySelector('.menu-value');
     let balance = 0;
+
+    function createNewProgressBar() {
+        // Удаляем старый progress bar если он есть
+        const oldBar = document.querySelector('.energy-bar');
+        if (oldBar) {
+            oldBar.remove();
+        }
+
+        // Создаем новый progress bar
+        const newBar = document.createElement('progress');
+        newBar.className = 'energy-bar';
+        newBar.max = 100;
+        newBar.value = 0;
+
+        // Вставляем новый progress bar перед кнопкой
+        energyControls.insertBefore(newBar, collectButton);
+
+        return newBar;
+    }
 
     function updateBalance(amount) {
         balance += amount;
@@ -18,29 +37,30 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startEnergyProgress() {
-        energyBar.value = 0;
+        const energyBar = createNewProgressBar();
         collectButton.disabled = true;
 
-        void energyBar.offsetWidth;
-
+        // Начинаем заполнение
         setTimeout(() => {
             energyBar.value = 100;
-        }, 50);
 
-        setTimeout(() => {
-            collectButton.disabled = false;
-        }, 5000);
+            // Активируем кнопку через 5 секунд
+            setTimeout(() => {
+                collectButton.disabled = false;
+            }, 5000);
+        }, 50);
     }
 
-    collectButton.addEventListener('click', function() {
+    // Обработчик кнопки Собрать
+    collectButton.addEventListener('click', () => {
         if (!collectButton.disabled) {
             vibrate();
             updateBalance(10);
-            energyBar.value = 0;
             startEnergyProgress();
         }
     });
 
+    // Запускаем первое заполнение
     startEnergyProgress();
 });
 

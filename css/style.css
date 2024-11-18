@@ -357,17 +357,53 @@ html, body {
 
 .energy-bar {
     flex: 1 !important;
+    height: 8px !important;
+    border: none !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+}
+
+.energy-bar::-webkit-progress-bar {
+    background-color: #1a1a1a !important;
+    border-radius: 4px !important;
+}
+
+.energy-bar::-webkit-progress-value {
+    background-color: #ffd700 !important;
+    transition: width 5s linear !important;
+}
+
+.energy-bar::-moz-progress-bar {
+    background-color: #ffd700 !important;
+    transition: width 5s linear !important;
+}
+
+.menu-row.energy-section {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
+    width: 100% !important;
+}
+
+.energy-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+}
+
+.energy-bar {
+    flex: 1 !important;
     background: #1a1a1a !important;
     height: 8px !important;
     border-radius: 4px !important;
     overflow: hidden !important;
-    position: relative !important;
 }
 
 .energy-progress {
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
     width: 0% !important;
     height: 100% !important;
     background: #ffd700 !important;
@@ -379,25 +415,22 @@ html, body {
     transition: width 5s linear !important;
 }
 
-.mining-button {
-    background: #7B68EE;
-    border: none;
-    border-radius: 12px;
-    color: white;
-    padding: 15px;
-    width: 100%;
-    font-size: 16px;
-    margin-top: 20px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
+.collect-button {
+    background: #ffd700 !important;
+    border: none !important;
+    border-radius: 4px !important;
+    padding: 4px 8px !important;
+    color: #000 !important;
+    font-size: 12px !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    min-width: 70px !important;
 }
 
-.mining-button::before,
-.mining-button::after {
-    content: '⭐';
+.collect-button:disabled {
+    background: #666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
 }
 
 .status-badge {
@@ -433,41 +466,37 @@ html, body {
 }
 
 .profile-section {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    padding: 10px 0;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    margin-bottom: 20px !important;
+    padding: 10px 0 !important;
 }
 
 .profile-avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 2px solid var(--gold-primary);
+    width: 42px !important;
+    height: 42px !important;
+    border-radius: 50% !important;
+    overflow: hidden !important;
+    border: 2px solid var(--gold-primary) !important;
 }
 
 .profile-avatar img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.profile-info {
-    flex: 1;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 .profile-name {
-    font-size: 18px;
-    font-weight: 500;
+    font-size: 18px !important;
+    font-weight: 500 !important;
     color: #ffffff !important;
-    margin-bottom: 4px;
+    margin-bottom: 4px !important;
 }
 
 .profile-id {
-    font-size: 14px;
-    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px !important;
+    color: rgba(255, 255, 255, 0.5) !important;
 }
 
 .energy-wrapper {

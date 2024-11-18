@@ -7,86 +7,33 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>MiningStars</title>
     <link rel="stylesheet" href="css/style.css">
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <meta name="color-scheme" content="dark">
-    <meta name="theme-color" content="#0a0a0a">
 </head>
 <body>
-    <div class="app">
-        <div class="content" id="mainContent">
-            <div class="menu-card">
-                <div class="menu-header">Мой Профиль</div>
-                <div class="profile-section">
-                    <div class="profile-avatar">
-                        <img id="userAvatar" src="images/default-avatar.png" alt="Аватар">
-                    </div>
-                    <div class="profile-info">
-                        <div id="userName" class="profile-name">User</div>
-                        <div id="userId" class="profile-id">ID: 0</div>
-                    </div>
+    <div class="container">
+        <div class="menu-card">
+            <div class="menu-header">Мой Профиль</div>
+            <div class="profile-section">
+                <div class="profile-avatar">
+                    <img id="userAvatar" alt="Аватар">
                 </div>
-                <div class="menu-row">
-                    <span class="menu-label">Баланс</span>
-                    <span class="menu-value">0.00 ⭐</span>
-                </div>
-                <div class="menu-row energy-section">
-                    <span class="menu-label">Энергия</span>
-                    <div class="energy-controls">
-                        <progress class="energy-bar" value="0" max="100"></progress>
-                        <button class="collect-button" disabled>Собрать</button>
-                    </div>
+                <div class="profile-info">
+                    <div id="userName" class="profile-name">User</div>
+                    <div id="userId" class="profile-id">ID: 0</div>
                 </div>
             </div>
-
-            <div class="menu-card">
-                <div class="menu-header">Информация</div>
-                <div class="menu-row">
-                    <span class="menu-label">Блок</span>
-                    <span class="menu-value">#000000</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">Сложность</span>
-                    <span class="menu-value">0.0K</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">Награда</span>
-                    <span class="menu-value">0 ⭐</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">В сети</span>
-                    <span class="menu-value">0.0K</span>
+            <div class="menu-row">
+                <span class="menu-label">Баланс</span>
+                <span class="menu-value">0.00 ⭐</span>
+            </div>
+            <div class="menu-row energy-section">
+                <span class="menu-label">Энергия</span>
+                <div class="energy-controls">
+                    <progress class="energy-bar" value="0" max="100"></progress>
+                    <button class="collect-button" disabled>Собрать</button>
                 </div>
             </div>
-
-            <div class="menu-card">
-                <div class="menu-header">Майнинг</div>
-                <div class="menu-row">
-                    <span class="menu-label">Статус</span>
-                    <span class="status-badge">Ожидание</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">Shares</span>
-                    <span class="menu-value">0</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">Хэши</span>
-                    <span class="menu-value">0</span>
-                </div>
-                <div class="menu-row">
-                    <span class="menu-label">Доход</span>
-                    <span class="menu-value">0 ⭐</span>
-                </div>
-            </div>
-
-            <button class="mining-button">Начать майнинг</button>
         </div>
-
-        <nav class="bottom-menu">
-            <button class="menu-item active" data-page="mining" style="color: #ffd700 !important;">Майн��нг</button>
-            <button class="menu-item" data-page="top" style="color: rgba(255, 255, 255, 0.7) !important;">Топ</button>
-            <button class="menu-item" data-page="tasks" style="color: rgba(255, 255, 255, 0.7) !important;">Задания</button>
-            <button class="menu-item" data-page="friends" style="color: rgba(255, 255, 255, 0.7) !important;">Друзья</button>
-        </nav>
+        <!-- Остальные карточки меню -->
     </div>
     <script src="js/telegram.js"></script>
     <script src="js/app.js"></script>
