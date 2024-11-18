@@ -561,7 +561,6 @@ html, body {
     align-items: flex-start !important;
     gap: 8px !important;
     width: 100% !important;
-    margin: 8px 0 !important;
 }
 
 .energy-controls {
@@ -569,7 +568,6 @@ html, body {
     align-items: center !important;
     gap: 10px !important;
     width: 100% !important;
-    margin-top: 4px !important;
 }
 
 .energy-bar {
@@ -580,8 +578,19 @@ html, body {
     overflow: hidden !important;
 }
 
+.energy-progress {
+    width: 0% !important;
+    height: 100% !important;
+    background: #ffd700 !important;
+    transition: width 0s linear !important;
+}
+
+.energy-progress.filling {
+    transition: width 5s linear !important;
+}
+
 .collect-button {
-    background: var(--gold-primary) !important;
+    background: #ffd700 !important;
     border: none !important;
     border-radius: 4px !important;
     padding: 4px 8px !important;
@@ -590,8 +599,12 @@ html, body {
     cursor: pointer !important;
     white-space: nowrap !important;
     min-width: 70px !important;
-    -webkit-appearance: none !important;
-    appearance: none !important;
+}
+
+.collect-button:disabled {
+    background: #666 !important;
+    cursor: not-allowed !important;
+    opacity: 0.5 !important;
 }
 
 /* Добавляем сброс стилей Telegram для этих элементов */
@@ -601,4 +614,46 @@ html, body {
 .collect-button {
     all: unset !important;
     box-sizing: border-box !important;
+}
+
+/* Добавляем отладочные стили */
+.energy-section {
+    border: 1px solid red !important;
+    padding: 10px !important;
+}
+
+.energy-controls {
+    display: flex !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    border: 1px solid blue !important;
+    padding: 5px !important;
+}
+
+.energy-bar {
+    flex: 1 !important;
+    background: #1a1a1a !important;
+    height: 8px !important;
+    border-radius: 4px !important;
+    overflow: hidden !important;
+    border: 1px solid green !important;
+}
+
+.energy-progress {
+    width: 0% !important;
+    height: 100% !important;
+    background: #ffd700 !important;
+    transition: width 0s linear !important;
+    display: block !important;
+}
+
+/* Убедимся, что элементы не скрыты */
+.menu-row.energy-section,
+.energy-controls,
+.energy-bar,
+.energy-progress {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
 }

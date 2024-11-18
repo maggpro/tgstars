@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function startEnergyProgress() {
         energyProgress.classList.remove('filling');
-        energyProgress.classList.remove('filled');
         energyProgress.style.width = '0%';
         collectButton.disabled = true;
 
@@ -28,14 +27,13 @@ document.addEventListener('DOMContentLoaded', function() {
             energyProgress.style.width = '100%';
 
             setTimeout(() => {
-                energyProgress.classList.add('filled');
                 collectButton.disabled = false;
             }, 5000);
         }, 50);
     }
 
     collectButton.addEventListener('click', function() {
-        if (energyProgress.style.width === '100%') {
+        if (!collectButton.disabled) {
             vibrate();
             updateBalance(10);
             startEnergyProgress();
