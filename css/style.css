@@ -481,7 +481,7 @@ html, body {
     width: 0%;
     height: 100%;
     background: var(--gold-primary);
-    transition: width 5s linear;
+    transition: width 0s linear;
 }
 
 .energy-progress.filled {
@@ -517,4 +517,36 @@ html, body {
 
 .collect-button:not(:disabled):active {
     transform: scale(0.95);
+}
+
+.energy-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.energy-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+}
+
+.energy-bar {
+    flex: 1;
+    background: #1a1a1a;
+    height: 8px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.energy-progress {
+    width: 0%;
+    height: 100%;
+    background: var(--gold-primary);
+    transition: width 0s linear;
+}
+
+.energy-progress.filling {
+    transition: width 5s linear;
 }

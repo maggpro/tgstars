@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const energyProgress = document.querySelector('.energy-progress');
     const collectButton = document.querySelector('.collect-button');
-    const balanceElement = document.querySelector('.menu-value'); // элемент с балансом
+    const balanceElement = document.querySelector('.menu-value');
     let balance = 0;
 
     function updateBalance(amount) {
@@ -10,13 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function startEnergyProgress() {
-        // Сбрасываем прогресс
-        energyProgress.style.width = '0%';
+        // Сбрасываем прогресс без анимации
+        energyProgress.classList.remove('filling');
         energyProgress.classList.remove('filled');
+        energyProgress.style.width = '0%';
         collectButton.disabled = true;
 
-        // Запускаем анимацию заполнения
+        // Добавляем небольшую задержку перед началом заполнения
         setTimeout(() => {
+            // Добавляем класс для анимации заполнения
+            energyProgress.classList.add('filling');
             energyProgress.style.width = '100%';
 
             // Когда энергия заполнена
@@ -30,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function() {
     collectButton.addEventListener('click', function() {
         if (energyProgress.style.width === '100%') {
             updateBalance(10);
-            // Перезапускаем прогресс сразу после нажатия
             startEnergyProgress();
         }
     });
